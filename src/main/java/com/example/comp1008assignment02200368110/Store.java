@@ -1,2 +1,4 @@
-package com.example.comp1008assignment02200368110;public class Store {
+package com.example.comp1008assignment02200368110;
+
+public class Store {
 }
