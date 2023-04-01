@@ -159,7 +159,7 @@ public class Product
 
     public String toString()
     {
-        return String.format("Name: %s Cost: %f In Stock: %b", name, price, inStock());
+        return name;
     }
 
     public String GetLocation()
