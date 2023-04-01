@@ -17,7 +17,7 @@
 
 <AnchorPane maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.comp1008assignment02200368110.LazehrsController">
     <children>
-      <AnchorPane fx:id="homeAnchor" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="homeAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -205,7 +205,7 @@
                                        <content>
                                           <HBox spacing="20.0">
                                              <children>
-                                                <VBox alignment="CENTER">
+                                                <VBox alignment="CENTER" onMouseClicked="#onAisle1">
                                                    <children>
                                                       <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -219,7 +219,7 @@
                                                       </Label>
                                                    </children>
                                                 </VBox>
-                                                <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                                                <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" onMouseClicked="#onAisle2">
                                                    <children>
                                                       <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -233,7 +233,7 @@
                                                       </Label>
                                                    </children>
                                                 </VBox>
-                                                <VBox alignment="CENTER" layoutX="105.0" layoutY="10.0">
+                                                <VBox alignment="CENTER" layoutX="105.0" layoutY="10.0" onMouseClicked="#onAisle3">
                                                    <children>
                                                       <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -247,7 +247,7 @@
                                                       </Label>
                                                    </children>
                                                 </VBox>
-                                                <VBox alignment="CENTER" layoutX="200.0" layoutY="10.0">
+                                                <VBox alignment="CENTER" layoutX="200.0" layoutY="10.0" onMouseClicked="#onAisle4">
                                                    <children>
                                                       <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -261,7 +261,7 @@
                                                       </Label>
                                                    </children>
                                                 </VBox>
-                                                <VBox alignment="CENTER" layoutX="295.0" layoutY="10.0">
+                                                <VBox alignment="CENTER" layoutX="295.0" layoutY="10.0" onMouseClicked="#onAisle5">
                                                    <children>
                                                       <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -275,7 +275,7 @@
                                                       </Label>
                                                    </children>
                                                 </VBox>
-                                                <VBox alignment="CENTER" layoutX="390.0" layoutY="10.0">
+                                                <VBox alignment="CENTER" layoutX="390.0" layoutY="10.0" onMouseClicked="#onAisle6">
                                                    <children>
                                                       <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -349,7 +349,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="productAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
+      <AnchorPane fx:id="productAnchor" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>

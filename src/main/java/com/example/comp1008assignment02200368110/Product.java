@@ -15,7 +15,7 @@ public class Product
     private int quantity;
     private double price;
 
-    public Product(String name, String upc, String itemId, String department, int aisle, int shelf, int row, int quantity, double price) {
+    public Product(String name, String upc, String itemId, String department, int aisle, int shelf, int row) {
         setName(name);
         setUpc(upc);
         setItemId(itemId);
@@ -23,8 +23,6 @@ public class Product
         setAisle(aisle);
         setShelf(shelf);
         setRow(row);
-        setQuantity(quantity);
-        setPrice(price);
     }
 
     public String getName() {
@@ -71,7 +69,7 @@ public class Product
     }
 
     public void setDepartment(String department) {
-        List<String> validDepartments = Arrays.asList("Produce", "Hot Deli", "Cold Deli", "Bakery", "Natural Foods", "Health and Beauty", "Meat", "Seafood", "Grocery", "Dairy", "Frozen", "Electronics");
+        List<String> validDepartments = Arrays.asList("Produce", "Hot Deli", "Cold Deli", "Bakery", "Natural Foods", "Beauty", "Meat", "Seafood", "Grocery", "Dairy", "Frozen", "Electronics");
         if (validDepartments.contains(department))
         {
             this.department = department;
