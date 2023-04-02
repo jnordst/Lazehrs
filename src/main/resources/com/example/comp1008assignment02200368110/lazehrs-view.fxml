@@ -352,7 +352,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="productAnchor" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="productAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -361,7 +361,7 @@
                <top>
                   <HBox id="nav-bar" alignment="CENTER" maxHeight="77.0" maxWidth="335.0" minHeight="77.0" minWidth="335.0" prefHeight="77.0" prefWidth="335.0" spacing="100.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label fx:id="departmentLabel1" text="Product" />
+                        <Label fx:id="productLabel" text="Product" />
                      </children>
                   </HBox>
                </top>
@@ -475,13 +475,14 @@
                               <Insets left="10.0" right="10.0" />
                            </padding>
                         </GridPane>
+                        <Button id="submit-button" mnemonicParsing="false" onAction="#editProduct" prefHeight="39.0" prefWidth="81.0" text="Edit" />
                      </children>
                   </VBox>
                </center>
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="newProductAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
+      <AnchorPane fx:id="newProductAnchor" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>

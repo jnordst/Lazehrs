@@ -38,6 +38,8 @@ public class LazehrsController implements Initializable {
     @FXML
     private Label departmentLabel;
     @FXML
+    private Label productLabel;
+    @FXML
     private ListView<?> listView;
     @FXML
     private Label productAisle;
@@ -161,8 +163,14 @@ public class LazehrsController implements Initializable {
         setupNewProduct();
     }
 
+    @FXML
+    void editProduct(ActionEvent event) {
+        editProduct(product);
+    }
+
     void setupNewProduct()
     {
+        productLabel.setText("New Product");
         closeAll();
         newProductAnchor.setDisable(false);
         newProductAnchor.setVisible(true);
@@ -176,10 +184,36 @@ public class LazehrsController implements Initializable {
         newProductShelf.setText("*Select");
         newProductRow.setText("*Select");
 
+        setupMenuSelects();
+    }
 
-        Product newProduct = new Product("Validator", "123456789012", "123456789", "Grocery", 1, 1, 1);
+    void editProduct(Product product)
+    {
+        productLabel.setText("Edit Product");
+        closeAll();
+        newProductAnchor.setDisable(false);
+        newProductAnchor.setVisible(true);
 
-        for (String dep : newProduct.getValidDepartments())
+        // Reset Values
+        newProductName.setText(product.getName());
+        newProductUPC.setText(product.getUpc());
+        newProductNumber.setText(product.getItemId());
+        newProductDepartment.setText(product.getDepartment());
+        newProductAisle.setText("" + product.getAisle());
+        newProductShelf.setText("" + product.getShelf());
+        newProductRow.setText("" + product.getRow());
+
+        setupMenuSelects();
+    }
+
+    void setupMenuSelects()
+    {
+        if (product == null)
+        {
+            product = new Product("Validator", "123456789012", "123456789", "Grocery", 1, 1, 1);
+        }
+
+        for (String dep : product.getValidDepartments())
         {
             MenuItem menuItem = new MenuItem(dep);
             newProductDepartment.getItems().add(menuItem);
@@ -188,7 +222,7 @@ public class LazehrsController implements Initializable {
             }));
         }
 
-        for (Integer aisle : newProduct.getValidAisles())
+        for (Integer aisle : product.getValidAisles())
         {
             MenuItem menuItem = new MenuItem("" + aisle);
             newProductAisle.getItems().add(menuItem);
@@ -197,7 +231,7 @@ public class LazehrsController implements Initializable {
             }));
         }
 
-        for (Integer shelf : newProduct.getValidShelves())
+        for (Integer shelf : product.getValidShelves())
         {
             MenuItem menuItem = new MenuItem("" + shelf);
             newProductShelf.getItems().add(menuItem);
@@ -206,7 +240,7 @@ public class LazehrsController implements Initializable {
             }));
         }
 
-        for (Integer row : newProduct.getValidRows())
+        for (Integer row : product.getValidRows())
         {
             MenuItem menuItem = new MenuItem("" + row);
             newProductRow.getItems().add(menuItem);
@@ -219,65 +253,74 @@ public class LazehrsController implements Initializable {
 
     @FXML
     void submitNewProduct(ActionEvent event) {
-        Product newProduct = new Product("Validator", "123456789012", "123456789", "Grocery", 1, 1, 1);
+        if (product == null)
+        {
+            product = new Product("Validator", "123456789012", "123456789", "Grocery", 1, 1, 1);
+        }
+
         // Validate Name
-        if (!newProduct.isValidName(newProductName.getText()))
+        if (!product.isValidName(newProductName.getText()))
         {
             setupWarningLabel("Name must be between 2 and 5 characters");
             return;
         }
 
         // Validate UPC
-        if (!newProduct.isValidUPC(newProductUPC.getText()))
+        if (!product.isValidUPC(newProductUPC.getText()))
         {
             setupWarningLabel("UPC must be either 12 numbers or empty");
             return;
         }
 
         // Validate Id
-        if (!newProduct.isValidId(newProductNumber.getText()))
+        if (!product.isValidId(newProductNumber.getText()))
         {
             setupWarningLabel("Item Id must be either 9 numbers or empty");
             return;
         }
 
         // Validate Department
-        if (!newProduct.getValidDepartments().contains(newProductDepartment.getText()))
+        if (!product.getValidDepartments().contains(newProductDepartment.getText()))
         {
             setupWarningLabel("Please select a department");
             return;
         }
 
         // Validate Aisle
-        if (newProductAisle.getText().equals("*Select")  || !newProduct.getValidAisles().contains(Integer.parseInt(newProductAisle.getText())))
+        if (newProductAisle.getText().equals("*Select")  || !product.getValidAisles().contains(Integer.parseInt(newProductAisle.getText())))
         {
             setupWarningLabel("Please select an aisle");
             return;
         }
 
         // Validate Shelf
-        if (newProductShelf.getText().equals("*Select") || !newProduct.getValidShelves().contains(Integer.parseInt(newProductShelf.getText())))
+        if (newProductShelf.getText().equals("*Select") || !product.getValidShelves().contains(Integer.parseInt(newProductShelf.getText())))
         {
             setupWarningLabel("Please select a shelf");
             return;
         }
 
         // Validate Row
-        if (newProductRow.getText().equals("*Select") || !newProduct.getValidRows().contains(Integer.parseInt(newProductRow.getText())))
+        if (newProductRow.getText().equals("*Select") || !product.getValidRows().contains(Integer.parseInt(newProductRow.getText())))
         {
             setupWarningLabel("Please select a row");
             return;
         }
 
         // Set Values
-        newProduct.setName(newProductName.getText());
-        newProduct.setUpc(newProductUPC.getText());
-        newProduct.setItemId(newProductNumber.getText());
-        newProduct.setDepartment(newProductDepartment.getText());
-        newProduct.setAisle(Integer.parseInt(newProductAisle.getText()));
-        newProduct.setShelf(Integer.parseInt(newProductShelf.getText()));
-        newProduct.setRow(Integer.parseInt(newProductRow.getText()));
-        store.addItem(newProduct);
+        product.setName(newProductName.getText());
+        product.setUpc(newProductUPC.getText());
+        product.setItemId(newProductNumber.getText());
+        product.setDepartment(newProductDepartment.getText());
+        product.setAisle(Integer.parseInt(newProductAisle.getText()));
+        product.setShelf(Integer.parseInt(newProductShelf.getText()));
+        product.setRow(Integer.parseInt(newProductRow.getText()));
+
+        if (!store.getProducts().contains(product))
+        {
+            store.addItem(product);
+        }
+
         setupHome();
     }
 
@@ -293,6 +336,7 @@ public class LazehrsController implements Initializable {
     void setupHome()
     {
         closeAll();
+        this.product = null;
         homeAnchor.setDisable(false);
         homeAnchor.setVisible(true);
     }
@@ -306,6 +350,7 @@ public class LazehrsController implements Initializable {
     void setupDepartment(String departmentName)
     {
         closeAll();
+        this.product = null;
         departmentAnchor.setDisable(false);
         departmentAnchor.setVisible(true);
         departmentLabel.setText(departmentName);
@@ -323,6 +368,7 @@ public class LazehrsController implements Initializable {
     void setupAisle(int aisleNumber)
     {
         closeAll();
+        this.product = null;
         departmentAnchor.setDisable(false);
         departmentAnchor.setVisible(true);
         departmentLabel.setText("Aisle " + aisleNumber);
@@ -381,6 +427,8 @@ public class LazehrsController implements Initializable {
 
     void setupProduct(Product product)
     {
+        this.product = product;
+
         productName.setText(product.getName());
         productUPC.setText(product.getUpc());
         productNumber.setText(product.getItemId());
