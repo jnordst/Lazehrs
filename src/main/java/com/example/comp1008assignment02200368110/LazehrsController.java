@@ -22,7 +22,6 @@ import java.util.ResourceBundle;
 public class LazehrsController implements Initializable {
 
     Store store;
-    String departmentName;
     Product product;
 
     @FXML
@@ -166,6 +165,28 @@ public class LazehrsController implements Initializable {
     @FXML
     void editProduct(ActionEvent event) {
         editProduct(product);
+    }
+
+    void onProduct(Product product)
+    {
+        closeAll();
+        productAnchor.setVisible(true);
+        productAnchor.setDisable(false);
+
+        setupProduct(product);
+    }
+
+    void setupProduct(Product product)
+    {
+        this.product = product;
+
+        productName.setText(product.getName());
+        productUPC.setText(product.getUpc());
+        productNumber.setText(product.getItemId());
+        productDepartment.setText(product.getDepartment());
+        productAisle.setText("" + product.getAisle());
+        productShelf.setText("" + product.getShelf());
+        productRow.setText("" + product.getRow());
     }
 
     void setupNewProduct()
@@ -324,15 +345,6 @@ public class LazehrsController implements Initializable {
         setupHome();
     }
 
-    boolean isNumeric(String string)
-    {
-        if (string.matches("\\d+")) {
-            return true;
-        }
-
-        return false;
-    }
-
     void setupHome()
     {
         closeAll();
@@ -414,28 +426,6 @@ public class LazehrsController implements Initializable {
     {
         newProductAnchor.setDisable(true);
         newProductAnchor.setVisible(false);
-    }
-
-    void onProduct(Product product)
-    {
-        closeAll();
-        productAnchor.setVisible(true);
-        productAnchor.setDisable(false);
-
-        setupProduct(product);
-    }
-
-    void setupProduct(Product product)
-    {
-        this.product = product;
-
-        productName.setText(product.getName());
-        productUPC.setText(product.getUpc());
-        productNumber.setText(product.getItemId());
-        productDepartment.setText(product.getDepartment());
-        productAisle.setText("" + product.getAisle());
-        productShelf.setText("" + product.getShelf());
-        productRow.setText("" + product.getRow());
     }
 
     @Override

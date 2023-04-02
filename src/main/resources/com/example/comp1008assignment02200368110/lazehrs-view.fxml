@@ -20,7 +20,7 @@
 
 <AnchorPane maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.comp1008assignment02200368110.LazehrsController">
     <children>
-      <AnchorPane fx:id="homeAnchor" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="homeAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -65,6 +65,9 @@
                                        <font>
                                           <Font name="Roboto" size="16.0" />
                                        </font>
+                                       <padding>
+                                          <Insets left="2.0" />
+                                       </padding>
                                     </Label>
                                     <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="98.0" prefWidth="318.0" vbarPolicy="NEVER" vmax="0.0">
                                        <content>
@@ -99,6 +102,9 @@
                                        <font>
                                           <Font name="Roboto" size="16.0" />
                                        </font>
+                                       <padding>
+                                          <Insets left="2.0" />
+                                       </padding>
                                     </Label>
                                     <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="98.0" prefWidth="318.0" vbarPolicy="NEVER" vmax="0.0">
                                        <content>
@@ -203,6 +209,9 @@
                                        <font>
                                           <Font name="Roboto" size="16.0" />
                                        </font>
+                                       <padding>
+                                          <Insets left="2.0" />
+                                       </padding>
                                     </Label>
                                     <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="98.0" prefWidth="318.0" vbarPolicy="NEVER" vmax="0.0">
                                        <content>
@@ -352,7 +361,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="productAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
+      <AnchorPane fx:id="productAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -482,7 +491,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="newProductAnchor" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="newProductAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
