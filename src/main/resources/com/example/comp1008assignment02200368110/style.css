@@ -7,20 +7,33 @@
 #nav-bar .label {
     -fx-text-fill: #ecf0f1;
     -fx-font-weight: bold;
-
 }
 
-.button {
+.button-bar .button {
     -fx-background-radius: 40px;
     -fx-background-color: rgba(255, 255, 255, 0);
     -fx-text-fill: #f1f2f6;
 }
 
+.button {
+    -fx-background-radius: 5px;
+    -fx-background-color: #40739e;
+    -fx-text-fill: #f1f2f6;
+}
+
 #nav-bar {
-    -fx-background-color: #2f3542;
+    -fx-background-color: #353b48;
 }
 
 #button-bar {
     -fx-background-color: #f1f2f6;
 }
 
+.text-field {
+    -fx-text-box-border: transparent;
+    -fx-font-style: italic;
+}
+
+#warning {
+    -fx-background-color: rgba(255, 31, 31, 0.7);
+}

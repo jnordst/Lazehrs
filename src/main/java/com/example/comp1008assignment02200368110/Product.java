@@ -12,8 +12,6 @@ public class Product
     private int aisle;
     private int shelf;
     private int row;
-    private int quantity;
-    private double price;
 
     public Product(String name, String upc, String itemId, String department, int aisle, int shelf, int row) {
         setName(name);
@@ -30,8 +28,9 @@ public class Product
     }
 
     public void setName(String name) {
-        if (name.length() >= 2 && name.length() <= 50)
+        if (isValidName(name))
         {
+            name = name.substring(0, 1).toUpperCase() + name.substring(1);
             this.name = name;
         }
         else
@@ -40,20 +39,39 @@ public class Product
         }
     }
 
+    public boolean isValidName(String name)
+    {
+        if (name.length() >= 2 && name.length() <= 50)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public String getUpc() {
         return upc;
     }
 
     public void setUpc(String upc) {
-        if (upc.length() == 12)
+        if (isValidUPC(upc))
         {
             this.upc = upc;
         }
         else
         {
-            throw new IllegalArgumentException("UPC must be 12 characters");
+            throw new IllegalArgumentException("UPC must be 12 characters or empty");
+        }
+    }
+
+    public boolean isValidUPC(String upc)
+    {
+        if (upc.length() == 12 && upc.matches("\\d+") || upc.length() == 0)
+        {
+            return true;
         }
 
+        return false;
     }
 
     public String getItemId() {
@@ -61,7 +79,25 @@ public class Product
     }
 
     public void setItemId(String itemId) {
-        this.itemId = itemId;
+        if (isValidId(itemId))
+        {
+            this.itemId = itemId;
+        }
+        else
+        {
+            throw new IllegalArgumentException("Item Id must be 9 characters or empty");
+        }
+
+    }
+
+    public boolean isValidId(String itemId)
+    {
+        if (itemId.length() == 9 && itemId.matches("\\d+") || itemId.length() == 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public String getDepartment() {
@@ -69,15 +105,19 @@ public class Product
     }
 
     public void setDepartment(String department) {
-        List<String> validDepartments = Arrays.asList("Produce", "Hot Deli", "Cold Deli", "Bakery", "Natural Foods", "Beauty", "Meat", "Seafood", "Grocery", "Dairy", "Frozen", "Electronics");
-        if (validDepartments.contains(department))
+        if (getValidDepartments().contains(department))
         {
             this.department = department;
         }
         else
         {
-            throw new IllegalArgumentException("Department must one of the following: " + validDepartments);
+            throw new IllegalArgumentException("Department must one of the following: " + getValidDepartments());
         }
+    }
+
+    public List<String> getValidDepartments()
+    {
+        return Arrays.asList("Natural Foods", "Health", "Beauty", "Grocery", "Dairy", "Frozen");
     }
 
     public int getAisle() {
@@ -85,14 +125,19 @@ public class Product
     }
 
     public void setAisle(int aisle) {
-        if (aisle <= 18 && aisle >= 1)
+        if (getValidAisles().contains(aisle))
         {
             this.aisle = aisle;
         }
         else
         {
-            throw new IllegalArgumentException("Aisle must be in range of 1 to 18");
+            throw new IllegalArgumentException("Aisle must be between" + getValidAisles().get(0) + " and "+ getValidAisles().get(-1));
         }
+    }
+
+    public List<Integer> getValidAisles()
+    {
+        return Arrays.asList(1, 2, 3, 4, 5, 6);
     }
 
     public int getShelf() {
@@ -100,14 +145,19 @@ public class Product
     }
 
     public void setShelf(int shelf) {
-        if (shelf <= 15 && shelf >= 1)
+        if (getValidShelves().contains(shelf))
         {
             this.shelf = shelf;
         }
         else
         {
-            throw new IllegalArgumentException("Shelf must be in range of 1 to 15");
+            throw new IllegalArgumentException("Shelf must be between " + getValidShelves().get(0) + " and "+ getValidShelves().get(-1));
         }
+    }
+
+    public List<Integer> getValidShelves()
+    {
+        return Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
 
     public int getRow() {
@@ -115,44 +165,19 @@ public class Product
     }
 
     public void setRow(int row) {
-        if (row <= 8 && row >= 1)
+        if (getValidRows().contains(row))
         {
             this.row = row;
         }
         else
         {
-            throw new IllegalArgumentException("Row must be in range of 1 to 8");
+            throw new IllegalArgumentException("Row must be between " + getValidRows().get(0) + " and "+ getValidRows().get(-1));
         }
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        if (quantity <= 999)
-        {
-            this.quantity = quantity;
-        }
-        else
-        {
-            throw new IllegalArgumentException("Quantity cannot exceed 999");
-        }
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        if (price <= 9999.99 && price >= 0.01)
-        {
-            this.price = price;
-        }
-        else
-        {
-            throw new IllegalArgumentException("Price must be in range of $0.01 to $9999.99");
-        }
+    public List<Integer> getValidRows()
+    {
+        return Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8);
     }
 
     public String toString()
@@ -163,16 +188,6 @@ public class Product
     public String GetLocation()
     {
         return String.format("Aisle: %d Shelf: %d Row: %d", aisle, shelf, row );
-    }
-
-    public boolean inStock()
-    {
-        if (quantity > 0)
-        {
-            return true;
-        }
-
-        return false;
     }
 
 }

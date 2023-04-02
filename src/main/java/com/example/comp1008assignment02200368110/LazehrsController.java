@@ -2,20 +2,20 @@ package com.example.comp1008assignment02200368110;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,39 +29,46 @@ public class LazehrsController implements Initializable {
     private AnchorPane homeAnchor;
     @FXML
     private AnchorPane departmentAnchor;
-
     @FXML
     private AnchorPane productAnchor;
-
+    @FXML
+    private AnchorPane newProductAnchor;
+    @FXML
+    private Label warningLabel;
     @FXML
     private Label departmentLabel;
-
     @FXML
     private ListView<?> listView;
-
     @FXML
     private Label productAisle;
-
     @FXML
     private Label productDepartment;
-
     @FXML
     private ImageView productImage;
-
     @FXML
     private Label productName;
-
     @FXML
     private Label productNumber;
-
     @FXML
     private Label productRow;
-
     @FXML
     private Label productShelf;
-
     @FXML
     private Label productUPC;
+    @FXML
+    private TextField newProductName;
+    @FXML
+    private TextField newProductUPC;
+    @FXML
+    private TextField newProductNumber;
+    @FXML
+    private MenuButton newProductDepartment;
+    @FXML
+    private MenuButton newProductAisle;
+    @FXML
+    private MenuButton newProductShelf;
+    @FXML
+    private MenuButton newProductRow;
 
     @FXML
     void onBeauty(MouseEvent event) {
@@ -130,22 +137,173 @@ public class LazehrsController implements Initializable {
 
     @FXML
     void onList(MouseEvent event) {
+        setupList();
+    }
 
+    void setupList(){
+        closeAll();
+        departmentAnchor.setDisable(false);
+        departmentAnchor.setVisible(true);
+        departmentLabel.setText("All Products");
+        ObservableList oStores = FXCollections.observableArrayList(store.getProducts());
+        listView.getItems().clear();
+        listView.setItems(oStores);
+        listView.getSelectionModel().selectedItemProperty().addListener((obs, old, itemSelected)->{
+            if (itemSelected != null)
+            {
+                onProduct((Product)itemSelected);
+            }
+        });
     }
 
     @FXML
     void onAdd(MouseEvent event) {
-
+        setupNewProduct();
     }
 
-    public void setupHome()
+    void setupNewProduct()
+    {
+        closeAll();
+        newProductAnchor.setDisable(false);
+        newProductAnchor.setVisible(true);
+
+        // Reset Values
+        newProductName.setText("");
+        newProductUPC.setText("");
+        newProductNumber.setText("");
+        newProductDepartment.setText("*Select");
+        newProductAisle.setText("*Select");
+        newProductShelf.setText("*Select");
+        newProductRow.setText("*Select");
+
+
+        Product newProduct = new Product("Validator", "123456789012", "123456789", "Grocery", 1, 1, 1);
+
+        for (String dep : newProduct.getValidDepartments())
+        {
+            MenuItem menuItem = new MenuItem(dep);
+            newProductDepartment.getItems().add(menuItem);
+            menuItem.setOnAction((event -> {
+                newProductDepartment.setText(dep);
+            }));
+        }
+
+        for (Integer aisle : newProduct.getValidAisles())
+        {
+            MenuItem menuItem = new MenuItem("" + aisle);
+            newProductAisle.getItems().add(menuItem);
+            menuItem.setOnAction((event -> {
+                newProductAisle.setText("" + aisle);
+            }));
+        }
+
+        for (Integer shelf : newProduct.getValidShelves())
+        {
+            MenuItem menuItem = new MenuItem("" + shelf);
+            newProductShelf.getItems().add(menuItem);
+            menuItem.setOnAction((event -> {
+                newProductShelf.setText("" + shelf);
+            }));
+        }
+
+        for (Integer row : newProduct.getValidRows())
+        {
+            MenuItem menuItem = new MenuItem("" + row);
+            newProductRow.getItems().add(menuItem);
+            menuItem.setOnAction((event -> {
+                newProductRow.setText("" + row);
+            }));
+        }
+    }
+
+
+    @FXML
+    void submitNewProduct(ActionEvent event) {
+        Product newProduct = new Product("Validator", "123456789012", "123456789", "Grocery", 1, 1, 1);
+        // Validate Name
+        if (!newProduct.isValidName(newProductName.getText()))
+        {
+            setupWarningLabel("Name must be between 2 and 5 characters");
+            return;
+        }
+
+        // Validate UPC
+        if (!newProduct.isValidUPC(newProductUPC.getText()))
+        {
+            setupWarningLabel("UPC must be either 12 numbers or empty");
+            return;
+        }
+
+        // Validate Id
+        if (!newProduct.isValidId(newProductNumber.getText()))
+        {
+            setupWarningLabel("Item Id must be either 9 numbers or empty");
+            return;
+        }
+
+        // Validate Department
+        if (!newProduct.getValidDepartments().contains(newProductDepartment.getText()))
+        {
+            setupWarningLabel("Please select a department");
+            return;
+        }
+
+        // Validate Aisle
+        if (newProductAisle.getText().equals("*Select")  || !newProduct.getValidAisles().contains(Integer.parseInt(newProductAisle.getText())))
+        {
+            setupWarningLabel("Please select an aisle");
+            return;
+        }
+
+        // Validate Shelf
+        if (newProductShelf.getText().equals("*Select") || !newProduct.getValidShelves().contains(Integer.parseInt(newProductShelf.getText())))
+        {
+            setupWarningLabel("Please select a shelf");
+            return;
+        }
+
+        // Validate Row
+        if (newProductRow.getText().equals("*Select") || !newProduct.getValidRows().contains(Integer.parseInt(newProductRow.getText())))
+        {
+            setupWarningLabel("Please select a row");
+            return;
+        }
+
+        // Set Values
+        newProduct.setName(newProductName.getText());
+        newProduct.setUpc(newProductUPC.getText());
+        newProduct.setItemId(newProductNumber.getText());
+        newProduct.setDepartment(newProductDepartment.getText());
+        newProduct.setAisle(Integer.parseInt(newProductAisle.getText()));
+        newProduct.setShelf(Integer.parseInt(newProductShelf.getText()));
+        newProduct.setRow(Integer.parseInt(newProductRow.getText()));
+        store.addItem(newProduct);
+        setupHome();
+    }
+
+    boolean isNumeric(String string)
+    {
+        if (string.matches("\\d+")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    void setupHome()
     {
         closeAll();
         homeAnchor.setDisable(false);
         homeAnchor.setVisible(true);
     }
 
-    public void setupDepartment(String departmentName)
+    void setupWarningLabel(String text)
+    {
+        warningLabel.setVisible(true);
+        warningLabel.setText(text);
+    }
+
+    void setupDepartment(String departmentName)
     {
         closeAll();
         departmentAnchor.setDisable(false);
@@ -184,6 +342,8 @@ public class LazehrsController implements Initializable {
         closeDepartment();
         closeHome();
         closeProduct();
+        closeNewProduct();
+        warningLabel.setVisible(false);
     }
 
     void closeDepartment()
@@ -200,8 +360,14 @@ public class LazehrsController implements Initializable {
 
     void closeProduct()
     {
-        productAnchor.setVisible(false);
         productAnchor.setDisable(true);
+        productAnchor.setVisible(false);
+    }
+
+    void closeNewProduct()
+    {
+        newProductAnchor.setDisable(true);
+        newProductAnchor.setVisible(false);
     }
 
     void onProduct(Product product)
@@ -213,7 +379,7 @@ public class LazehrsController implements Initializable {
         setupProduct(product);
     }
 
-    public void setupProduct(Product product)
+    void setupProduct(Product product)
     {
         productName.setText(product.getName());
         productUPC.setText(product.getUpc());
