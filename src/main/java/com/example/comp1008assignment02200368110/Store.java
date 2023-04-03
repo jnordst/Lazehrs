@@ -6,9 +6,49 @@ import java.util.List;
 public class Store
 {
     private ArrayList<Product> products;
+    private List<String> departments;
+    private int aisles;
+    private int shelves;
+    private int rows;
 
-    public Store() {
+    public Store(List<String> departments, int maxNumberOfAisles, int maxNumberOfShelves, int maxNumberOfRows) {
+        setDepartments(departments);
+        setAisles(maxNumberOfAisles);
+        setShelves(maxNumberOfShelves);
+        setRows(maxNumberOfRows);
         products = new ArrayList<>();
+    }
+
+    public List<String> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<String> departments) {
+        this.departments = departments;
+    }
+
+    public int getAisles() {
+        return aisles;
+    }
+
+    public void setAisles(int aisles) {
+        this.aisles = aisles;
+    }
+
+    public int getShelves() {
+        return shelves;
+    }
+
+    public void setShelves(int shelves) {
+        this.shelves = shelves;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
     }
 
     public void addItem(Product product)
@@ -29,6 +69,26 @@ public class Store
     public ArrayList<Product> getProductsFromDepartment(String department)
     {
         return new ArrayList<>(products.stream().filter(product -> product.getDepartment().equals(department)).toList());
+    }
+
+    public boolean hasProductByUpc(String upc)
+    {
+        if (upc.equals(""))
+        {
+            return false;
+        }
+
+        return products.stream().anyMatch(product -> product.getUpc().equals(upc));
+    }
+
+    public boolean hasProductById(String id)
+    {
+        if (id.equals(""))
+        {
+            return false;
+        }
+
+        return products.stream().anyMatch(product -> product.getItemId().equals(id));
     }
 
 }

@@ -4,19 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LazehrsController implements Initializable {
@@ -141,7 +137,28 @@ public class LazehrsController implements Initializable {
         setupList();
     }
 
-    void setupList(){
+    @FXML
+    void onAdd(MouseEvent event) {
+        setupNewProduct();
+    }
+
+    @FXML
+    void editProduct(ActionEvent event) {
+        editProduct(product);
+    }
+
+    // Home ----------------------------------------------------------------------------------------------
+    void setupHome()
+    {
+        closeAll();
+        this.product = null;
+        homeAnchor.setDisable(false);
+        homeAnchor.setVisible(true);
+    }
+
+    // List ----------------------------------------------------------------------------------------------
+    void setupList()
+    {
         closeAll();
         departmentAnchor.setDisable(false);
         departmentAnchor.setVisible(true);
@@ -157,16 +174,43 @@ public class LazehrsController implements Initializable {
         });
     }
 
-    @FXML
-    void onAdd(MouseEvent event) {
-        setupNewProduct();
+    void setupDepartment(String departmentName)
+    {
+        closeAll();
+        this.product = null;
+        departmentAnchor.setDisable(false);
+        departmentAnchor.setVisible(true);
+        departmentLabel.setText(departmentName);
+        ObservableList oStores = FXCollections.observableArrayList(store.getProductsFromDepartment(departmentName));
+        listView.getItems().clear();
+        listView.setItems(oStores);
+        listView.getSelectionModel().selectedItemProperty().addListener((obs, old, itemSelected)->{
+            if (itemSelected != null)
+            {
+                onProduct((Product)itemSelected);
+            }
+        });
     }
 
-    @FXML
-    void editProduct(ActionEvent event) {
-        editProduct(product);
+    void setupAisle(int aisleNumber)
+    {
+        closeAll();
+        this.product = null;
+        departmentAnchor.setDisable(false);
+        departmentAnchor.setVisible(true);
+        departmentLabel.setText("Aisle " + aisleNumber);
+        ObservableList oStores = FXCollections.observableArrayList(store.getProductsFromAisle(aisleNumber));
+        listView.getItems().clear();
+        listView.setItems(oStores);
+        listView.getSelectionModel().selectedItemProperty().addListener((obs, old, itemSelected)->{
+            if (itemSelected != null)
+            {
+                onProduct((Product)itemSelected);
+            }
+        });
     }
 
+    // Product -------------------------------------------------------------------------------------------
     void onProduct(Product product)
     {
         closeAll();
@@ -191,6 +235,7 @@ public class LazehrsController implements Initializable {
 
     void setupNewProduct()
     {
+        this.product = null;
         productLabel.setText("New Product");
         closeAll();
         newProductAnchor.setDisable(false);
@@ -231,10 +276,17 @@ public class LazehrsController implements Initializable {
     {
         if (product == null)
         {
-            product = new Product("Validator", "123456789012", "123456789", "Grocery", 1, 1, 1);
+            product = new Product("Validator", "", "", "Grocery", 1, 1, 1, store);
         }
 
-        for (String dep : product.getValidDepartments())
+        // Clear the lists
+        newProductDepartment.getItems().clear();
+        newProductAisle.getItems().clear();
+        newProductShelf.getItems().clear();
+        newProductRow.getItems().clear();
+
+        // Add items to the lists
+        for (String dep : store.getDepartments())
         {
             MenuItem menuItem = new MenuItem(dep);
             newProductDepartment.getItems().add(menuItem);
@@ -243,40 +295,43 @@ public class LazehrsController implements Initializable {
             }));
         }
 
-        for (Integer aisle : product.getValidAisles())
+        for (int i = 0; i < store.getAisles(); i++)
         {
-            MenuItem menuItem = new MenuItem("" + aisle);
+            int finalI = i+1;
+            MenuItem menuItem = new MenuItem("" + finalI);
             newProductAisle.getItems().add(menuItem);
             menuItem.setOnAction((event -> {
-                newProductAisle.setText("" + aisle);
+                newProductAisle.setText("" + finalI);
             }));
         }
 
-        for (Integer shelf : product.getValidShelves())
+        for (int i = 0; i < store.getShelves(); i++)
         {
-            MenuItem menuItem = new MenuItem("" + shelf);
+            int finalI = i+1;
+            MenuItem menuItem = new MenuItem("" + finalI);
             newProductShelf.getItems().add(menuItem);
             menuItem.setOnAction((event -> {
-                newProductShelf.setText("" + shelf);
+                newProductShelf.setText("" + finalI);
             }));
         }
 
-        for (Integer row : product.getValidRows())
+        for (int i = 0; i < store.getRows(); i++)
         {
-            MenuItem menuItem = new MenuItem("" + row);
+            int finalI = i+1;
+            MenuItem menuItem = new MenuItem("" + finalI);
             newProductRow.getItems().add(menuItem);
             menuItem.setOnAction((event -> {
-                newProductRow.setText("" + row);
+                newProductRow.setText("" + finalI);
             }));
         }
     }
 
-
     @FXML
-    void submitNewProduct(ActionEvent event) {
+    void submitNewProduct(ActionEvent event)
+    {
         if (product == null)
         {
-            product = new Product("Validator", "123456789012", "123456789", "Grocery", 1, 1, 1);
+            product = new Product("Validator", "", "", "Grocery", 1, 1, 1, store);
         }
 
         // Validate Name
@@ -287,7 +342,16 @@ public class LazehrsController implements Initializable {
         }
 
         // Validate UPC
-        if (!product.isValidUPC(newProductUPC.getText()))
+        if (!store.getProducts().contains(product))
+        {
+            if (store.hasProductByUpc(newProductUPC.getText()))
+            {
+                setupWarningLabel("UPC Already Exists");
+                return;
+            }
+        }
+
+        if (!product.isValidUpc(newProductUPC.getText()))
         {
             setupWarningLabel("UPC must be either 12 numbers or empty");
             return;
@@ -301,28 +365,28 @@ public class LazehrsController implements Initializable {
         }
 
         // Validate Department
-        if (!product.getValidDepartments().contains(newProductDepartment.getText()))
+        if (!store.getDepartments().contains(newProductDepartment.getText()))
         {
             setupWarningLabel("Please select a department");
             return;
         }
 
         // Validate Aisle
-        if (newProductAisle.getText().equals("*Select")  || !product.getValidAisles().contains(Integer.parseInt(newProductAisle.getText())))
+        if (newProductAisle.getText().equals("*Select"))
         {
             setupWarningLabel("Please select an aisle");
             return;
         }
 
         // Validate Shelf
-        if (newProductShelf.getText().equals("*Select") || !product.getValidShelves().contains(Integer.parseInt(newProductShelf.getText())))
+        if (newProductShelf.getText().equals("*Select"))
         {
             setupWarningLabel("Please select a shelf");
             return;
         }
 
         // Validate Row
-        if (newProductRow.getText().equals("*Select") || !product.getValidRows().contains(Integer.parseInt(newProductRow.getText())))
+        if (newProductRow.getText().equals("*Select"))
         {
             setupWarningLabel("Please select a row");
             return;
@@ -345,56 +409,13 @@ public class LazehrsController implements Initializable {
         setupHome();
     }
 
-    void setupHome()
-    {
-        closeAll();
-        this.product = null;
-        homeAnchor.setDisable(false);
-        homeAnchor.setVisible(true);
-    }
-
     void setupWarningLabel(String text)
     {
         warningLabel.setVisible(true);
         warningLabel.setText(text);
     }
 
-    void setupDepartment(String departmentName)
-    {
-        closeAll();
-        this.product = null;
-        departmentAnchor.setDisable(false);
-        departmentAnchor.setVisible(true);
-        departmentLabel.setText(departmentName);
-        ObservableList oStores = FXCollections.observableArrayList(store.getProductsFromDepartment(departmentName));
-        listView.getItems().clear();
-        listView.setItems(oStores);
-        listView.getSelectionModel().selectedItemProperty().addListener((obs, old, itemSelected)->{
-            if (itemSelected != null)
-            {
-                onProduct((Product)itemSelected);
-            }
-        });
-    }
-
-    void setupAisle(int aisleNumber)
-    {
-        closeAll();
-        this.product = null;
-        departmentAnchor.setDisable(false);
-        departmentAnchor.setVisible(true);
-        departmentLabel.setText("Aisle " + aisleNumber);
-        ObservableList oStores = FXCollections.observableArrayList(store.getProductsFromAisle(aisleNumber));
-        listView.getItems().clear();
-        listView.setItems(oStores);
-        listView.getSelectionModel().selectedItemProperty().addListener((obs, old, itemSelected)->{
-            if (itemSelected != null)
-            {
-                onProduct((Product)itemSelected);
-            }
-        });
-    }
-
+    // Close Panes ---------------------------------------------------------------------------------------
     void closeAll()
     {
         closeDepartment();
@@ -428,21 +449,25 @@ public class LazehrsController implements Initializable {
         newProductAnchor.setVisible(false);
     }
 
+    // Initialize ----------------------------------------------------------------------------------------
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        store = new Store();
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+        List<String> departments = Arrays.asList("Natural Foods", "Health", "Beauty", "Grocery", "Dairy", "Frozen");
+        store = new Store(departments, 6, 10, 8);
+        System.out.println(store.getDepartments());
 
         // Sample Products
-        Product stoveTopChickenStuffingMix = new Product("Stv Tp Chckn Stffng Mx", "000000000001", "000000001", "Grocery", 3, 6, 2);
-        Product christieChipsAhoyOriginal = new Product("Chrst Chips Ahoy Orig", "000000000002", "000000002", "Grocery", 4, 4, 5);
-        Product greenGiantPeachesnCream = new Product("Grn Gnt Pchs & Crm Corn", "000000000003", "000000003", "Grocery", 3, 4, 5);
-        Product oldSpiceSwaggerShampoo = new Product("Old Spice Swagger Shamp", "000000000004", "000000004", "Beauty", 1, 1, 5);
-        Product sensadyneToothpasteWhitening = new Product("Sensadyne White Toothepaste", "000000000005", "000000005", "Beauty", 1, 1, 5);
-        Product veggieStrawsOriginal = new Product("Veggie Straws Original", "000000000006", "000000006", "Natural Foods", 2, 5, 3);
-        Product silkAlmondOriginal = new Product("SIlk Almond Original", "000000000007", "000000007", "Natural Foods", 2, 1, 3);
-        Product nelson2PercentMilk = new Product("Nelson 2% Milk", "000000000008", "000000008", "Dairy", 5, 1, 3);
-        Product blackDiamondMarbleCheese = new Product("Black Diamond Marble Cheese", "000000000009", "000000009", "Dairy", 5, 1, 3);
-        Product chapmansFudgeIceCream = new Product("Chapmans Fudge Ice Cream", "000000000010", "000000010", "Frozen", 5, 1, 3);
+        Product stoveTopChickenStuffingMix = new Product("Stove Top Chicken Stuffing Mix", "000000000001", "000000001", "Grocery", 3, 6, 2, store);
+        Product christieChipsAhoyOriginal = new Product("Chips Ahoy Cookies Original", "000000000002", "000000002", "Grocery", 4, 4, 5, store);
+        Product greenGiantPeachesnCream = new Product("Green Giant Peaches & Cream Corn", "000000000003", "000000003", "Grocery", 3, 4, 5, store);
+        Product oldSpiceSwaggerShampoo = new Product("Old Spice Swagger Shampoo", "000000000004", "000000004", "Beauty", 1, 1, 5, store);
+        Product sensadyneToothpasteWhitening = new Product("Sensadyne White Toothepaste", "000000000005", "000000005", "Beauty", 1, 1, 5, store);
+        Product veggieStrawsOriginal = new Product("Veggie Straws Original", "000000000006", "000000006", "Natural Foods", 2, 5, 3, store);
+        Product silkAlmondOriginal = new Product("SIlk Almond Original", "000000000007", "000000007", "Natural Foods", 2, 1, 3, store);
+        Product nelson2PercentMilk = new Product("Nelson 2% Milk", "000000000008", "000000008", "Dairy", 5, 1, 3, store);
+        Product blackDiamondMarbleCheese = new Product("Black Diamond Marble Cheese", "000000000009", "000000009", "Dairy", 5, 1, 3, store);
+        Product chapmansFudgeIceCream = new Product("Chapmans Fudge Ice Cream", "000000000010", "000000010", "Frozen", 5, 1, 3, store);
 
         store.addItem(stoveTopChickenStuffingMix);
         store.addItem(christieChipsAhoyOriginal);
