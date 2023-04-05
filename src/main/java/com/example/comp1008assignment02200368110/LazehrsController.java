@@ -20,22 +20,24 @@ public class LazehrsController implements Initializable {
     Store store;
     Product product;
 
+    // Home ----------------------------------------------------------------------------------------------
     @FXML
-    private AnchorPane homeAnchor;
+    private AnchorPane homePage;
+
+    // Results -------------------------------------------------------------------------------------------
     @FXML
-    private AnchorPane departmentAnchor;
+    private AnchorPane resultsPage;
     @FXML
-    private AnchorPane productAnchor;
-    @FXML
-    private AnchorPane newProductAnchor;
-    @FXML
-    private Label warningLabel;
-    @FXML
-    private Label departmentLabel;
-    @FXML
-    private Label productLabel;
+    private Label resultsLabel;
     @FXML
     private ListView<?> listView;
+
+
+    // Product -------------------------------------------------------------------------------------------
+    @FXML
+    private AnchorPane productPage;
+    @FXML
+    private Label productLabel;
     @FXML
     private Label productAisle;
     @FXML
@@ -52,6 +54,12 @@ public class LazehrsController implements Initializable {
     private Label productShelf;
     @FXML
     private Label productUPC;
+
+    // New Product ---------------------------------------------------------------------------------------
+    @FXML
+    private AnchorPane newProductPage;
+    @FXML
+    private Label warningLabel;
     @FXML
     private TextField newProductName;
     @FXML
@@ -134,7 +142,7 @@ public class LazehrsController implements Initializable {
 
     @FXML
     void onList(MouseEvent event) {
-        setupList();
+        showAllProducts();
     }
 
     @FXML
@@ -152,17 +160,17 @@ public class LazehrsController implements Initializable {
     {
         closeAll();
         this.product = null;
-        homeAnchor.setDisable(false);
-        homeAnchor.setVisible(true);
+        homePage.setDisable(false);
+        homePage.setVisible(true);
     }
 
-    // List ----------------------------------------------------------------------------------------------
-    void setupList()
+    // Results -------------------------------------------------------------------------------------------
+    void showAllProducts()
     {
         closeAll();
-        departmentAnchor.setDisable(false);
-        departmentAnchor.setVisible(true);
-        departmentLabel.setText("All Products");
+        resultsPage.setDisable(false);
+        resultsPage.setVisible(true);
+        resultsLabel.setText("All Products");
         ObservableList oStores = FXCollections.observableArrayList(store.getProducts());
         listView.getItems().clear();
         listView.setItems(oStores);
@@ -178,9 +186,9 @@ public class LazehrsController implements Initializable {
     {
         closeAll();
         this.product = null;
-        departmentAnchor.setDisable(false);
-        departmentAnchor.setVisible(true);
-        departmentLabel.setText(departmentName);
+        resultsPage.setDisable(false);
+        resultsPage.setVisible(true);
+        resultsLabel.setText(departmentName);
         ObservableList oStores = FXCollections.observableArrayList(store.getProductsFromDepartment(departmentName));
         listView.getItems().clear();
         listView.setItems(oStores);
@@ -196,9 +204,9 @@ public class LazehrsController implements Initializable {
     {
         closeAll();
         this.product = null;
-        departmentAnchor.setDisable(false);
-        departmentAnchor.setVisible(true);
-        departmentLabel.setText("Aisle " + aisleNumber);
+        resultsPage.setDisable(false);
+        resultsPage.setVisible(true);
+        resultsLabel.setText("Aisle " + aisleNumber);
         ObservableList oStores = FXCollections.observableArrayList(store.getProductsFromAisle(aisleNumber));
         listView.getItems().clear();
         listView.setItems(oStores);
@@ -214,8 +222,8 @@ public class LazehrsController implements Initializable {
     void onProduct(Product product)
     {
         closeAll();
-        productAnchor.setVisible(true);
-        productAnchor.setDisable(false);
+        productPage.setVisible(true);
+        productPage.setDisable(false);
 
         setupProduct(product);
     }
@@ -238,8 +246,8 @@ public class LazehrsController implements Initializable {
         this.product = null;
         productLabel.setText("New Product");
         closeAll();
-        newProductAnchor.setDisable(false);
-        newProductAnchor.setVisible(true);
+        newProductPage.setDisable(false);
+        newProductPage.setVisible(true);
 
         // Reset Values
         newProductName.setText("");
@@ -257,8 +265,8 @@ public class LazehrsController implements Initializable {
     {
         productLabel.setText("Edit Product");
         closeAll();
-        newProductAnchor.setDisable(false);
-        newProductAnchor.setVisible(true);
+        newProductPage.setDisable(false);
+        newProductPage.setVisible(true);
 
         // Reset Values
         newProductName.setText(product.getName());
@@ -427,35 +435,33 @@ public class LazehrsController implements Initializable {
 
     void closeDepartment()
     {
-        departmentAnchor.setDisable(true);
-        departmentAnchor.setVisible(false);
+        resultsPage.setDisable(true);
+        resultsPage.setVisible(false);
     }
 
     void closeHome()
     {
-        homeAnchor.setDisable(true);
-        homeAnchor.setVisible(false);
+        homePage.setDisable(true);
+        homePage.setVisible(false);
     }
 
     void closeProduct()
     {
-        productAnchor.setDisable(true);
-        productAnchor.setVisible(false);
+        productPage.setDisable(true);
+        productPage.setVisible(false);
     }
 
     void closeNewProduct()
     {
-        newProductAnchor.setDisable(true);
-        newProductAnchor.setVisible(false);
+        newProductPage.setDisable(true);
+        newProductPage.setVisible(false);
     }
 
     // Initialize ----------------------------------------------------------------------------------------
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        List<String> departments = Arrays.asList("Natural Foods", "Health", "Beauty", "Grocery", "Dairy", "Frozen");
-        store = new Store(departments, 6, 10, 8);
-        System.out.println(store.getDepartments());
+        store = new Store("Zehrs", Arrays.asList("Natural Foods", "Health", "Beauty", "Grocery", "Dairy", "Frozen"), 6, 10, 8);
 
         // Sample Products
         Product stoveTopChickenStuffingMix = new Product("Stove Top Chicken Stuffing Mix", "000000000001", "000000001", "Grocery", 3, 6, 2, store);

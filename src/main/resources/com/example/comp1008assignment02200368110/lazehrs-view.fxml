@@ -20,7 +20,7 @@
 
 <AnchorPane maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.comp1008assignment02200368110.LazehrsController">
    <children>
-      <AnchorPane fx:id="homeAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
+      <AnchorPane fx:id="homePage" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -321,7 +321,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="departmentAnchor" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="resultsPage" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -330,7 +330,7 @@
                <top>
                   <HBox id="nav-bar" alignment="CENTER" maxHeight="77.0" maxWidth="335.0" minHeight="77.0" minWidth="335.0" prefHeight="77.0" prefWidth="335.0" spacing="100.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label fx:id="departmentLabel" text="Grocery" />
+                        <Label fx:id="resultsLabel" text="Grocery" />
                      </children>
                   </HBox>
                </top>
@@ -361,7 +361,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="productAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="productPage" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -491,7 +491,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="newProductAnchor" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="newProductPage" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>

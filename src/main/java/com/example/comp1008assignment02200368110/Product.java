@@ -190,9 +190,4 @@ public class Product
         return name;
     }
 
-    public String GetLocation()
-    {
-        return String.format("Aisle: %d Shelf: %d Row: %d", aisle, shelf, row );
-    }
-
 }

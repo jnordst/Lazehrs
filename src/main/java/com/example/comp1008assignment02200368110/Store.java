@@ -6,17 +6,27 @@ import java.util.List;
 public class Store
 {
     private ArrayList<Product> products;
+    private String name;
     private List<String> departments;
     private int aisles;
     private int shelves;
     private int rows;
 
-    public Store(List<String> departments, int maxNumberOfAisles, int maxNumberOfShelves, int maxNumberOfRows) {
+    public Store(String name, List<String> departments, int maxNumberOfAisles, int maxNumberOfShelves, int maxNumberOfRows) {
+        setName(name);
         setDepartments(departments);
         setAisles(maxNumberOfAisles);
         setShelves(maxNumberOfShelves);
         setRows(maxNumberOfRows);
         products = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<String> getDepartments() {
