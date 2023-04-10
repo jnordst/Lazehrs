@@ -22,7 +22,7 @@
    <children>
       <AnchorPane fx:id="homePage" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
          <children>
-            <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <BorderPane maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -59,7 +59,7 @@
                      <content>
                         <VBox spacing="10.0">
                            <children>
-                              <VBox prefHeight="118.0" prefWidth="333.0">
+                              <VBox maxHeight="118.0" maxWidth="333.0" minHeight="118.0" minWidth="333.0" prefHeight="118.0" prefWidth="333.0">
                                  <children>
                                     <Label text="Stores">
                                        <font>
@@ -96,7 +96,7 @@
                                     </ScrollPane>
                                  </children>
                               </VBox>
-                              <VBox layoutX="10.0" layoutY="10.0" prefHeight="118.0" prefWidth="333.0">
+                              <VBox layoutX="10.0" layoutY="10.0" maxHeight="118.0" maxWidth="333.0" minHeight="118.0" minWidth="333.0" prefHeight="118.0" prefWidth="333.0">
                                  <children>
                                     <Label text="Departments">
                                        <font>
@@ -203,7 +203,7 @@
                                     </ScrollPane>
                                  </children>
                               </VBox>
-                              <VBox layoutX="10.0" layoutY="138.0" prefHeight="118.0" prefWidth="333.0">
+                              <VBox layoutX="10.0" layoutY="138.0" maxHeight="118.0" maxWidth="333.0" minHeight="118.0" minWidth="333.0" prefHeight="118.0" prefWidth="333.0">
                                  <children>
                                     <Label text="Aisle">
                                        <font>
@@ -321,7 +321,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="resultsPage" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css">
+      <AnchorPane fx:id="resultsPage" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -361,7 +361,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="productPage" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="productPage" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>
@@ -491,7 +491,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="newProductPage" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
+      <AnchorPane fx:id="newProductPage" disable="true" maxHeight="600.0" maxWidth="335.0" minHeight="600.0" minWidth="335.0" prefHeight="600.0" prefWidth="335.0" stylesheets="@style.css" visible="false">
          <children>
             <BorderPane prefHeight="600.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <opaqueInsets>

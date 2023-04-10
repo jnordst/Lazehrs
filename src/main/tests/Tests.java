@@ -128,7 +128,7 @@ public class Tests {
     @org.junit.Test(expected = IllegalArgumentException.class)
     public void testInvalidId()
     {
-        product.setUpc("123");
+        product.setItemId("123");
     }
 
     @org.junit.Test(expected = IllegalArgumentException.class)
