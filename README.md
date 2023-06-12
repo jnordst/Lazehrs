@@ -65,3 +65,8 @@ The Store class represents a store that sells Products. It provides methods for 
 ![image](https://user-images.githubusercontent.com/12515630/230994996-a93abf77-df42-4d89-8dfd-f86f5639e0f1.png)
 ![image](https://user-images.githubusercontent.com/12515630/230995012-7f695090-5d3d-4f63-a846-57b15d44dff9.png)
 ![image](https://user-images.githubusercontent.com/12515630/230995073-ca04b9b4-d612-4543-b808-f3d5e1e2ea4d.png)
+
+## License
+This project is purely educational and is not affiliated with or endorsed by Zehrs or any other third-party entities. The purpose of this project is to explore and demonstrate programming concepts, data analysis techniques, and user interface design.
+
+The project does not claim ownership over any Zehrs logos, trademarks, or copyrighted information. All rights and ownership of the Zehrs logos, trademarks, and data belong to their respective owners.
